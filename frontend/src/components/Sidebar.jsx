@@ -5,6 +5,7 @@ const links = [
   { to: '/protocolos', label: 'Protocolos' },
   { to: '/setores', label: 'Setores' },
   { to: '/usuarios', label: 'Usuários' },
+  { to: '/minha-conta', label: 'Minha Conta' },
 ]
 
 export default function Sidebar() {

@@ -6,6 +6,7 @@ import NovoProtocolo from './pages/NovoProtocolo'
 import DetalheProtocolo from './pages/DetalheProtocolo'
 import Setores from './pages/Setores'
 import Usuarios from './pages/Usuarios'
+import MinhaConta from './pages/MinhaConta'
 import Layout from './components/Layout'
 import ProtectedRoute from './components/ProtectedRoute'
 
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/protocolos/:id" element={<DetalheProtocolo />} />
             <Route path="/setores" element={<Setores />} />
             <Route path="/usuarios" element={<Usuarios />} />
+            <Route path="/minha-conta" element={<MinhaConta />} />
           </Route>
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />

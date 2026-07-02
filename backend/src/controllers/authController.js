@@ -23,4 +23,21 @@ async function login(req, res) {
   res.json({ token, usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email, perfil: usuario.perfil, setor: usuario.setor } })
 }
 
-module.exports = { login }
+async function alterarSenha(req, res) {
+  const { senhaAtual, novaSenha } = req.body
+  if (!senhaAtual || !novaSenha) return res.status(400).json({ erro: 'Senha atual e nova senha são obrigatórias' })
+  if (novaSenha.length < 6) return res.status(400).json({ erro: 'A nova senha deve ter pelo menos 6 caracteres' })
+
+  const usuario = await prisma.user.findUnique({ where: { id: req.usuario.id } })
+  if (!usuario) return res.status(404).json({ erro: 'Usuário não encontrado' })
+
+  const senhaOk = await bcrypt.compare(senhaAtual, usuario.senha)
+  if (!senhaOk) return res.status(400).json({ erro: 'Senha atual incorreta' })
+
+  const novaHash = await bcrypt.hash(novaSenha, 10)
+  await prisma.user.update({ where: { id: usuario.id }, data: { senha: novaHash } })
+
+  res.json({ mensagem: 'Senha alterada com sucesso' })
+}
+
+module.exports = { login, alterarSenha }
