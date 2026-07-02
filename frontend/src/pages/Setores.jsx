@@ -40,10 +40,10 @@ export default function Setores() {
           <h3 className="font-semibold text-gray-700 mb-3">Novo Setor</h3>
           <div className="flex gap-3">
             <input placeholder="Nome do setor" value={form.nome} onChange={e => setForm(f => ({ ...f, nome: e.target.value }))} required
-              className="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              className="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" />
             <input placeholder="Sigla" value={form.sigla} onChange={e => setForm(f => ({ ...f, sigla: e.target.value }))} required
-              className="w-28 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" maxLength={10} />
-            <button type="submit" className="px-5 py-2 bg-blue-700 text-white rounded hover:bg-blue-800 transition-colors">Cadastrar</button>
+              className="w-28 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" maxLength={10} />
+            <button type="submit" className="px-5 py-2 bg-vinho-700 text-white rounded hover:bg-vinho-800 transition-colors">Cadastrar</button>
           </div>
           {erro && <p className="text-red-600 text-sm mt-2">{erro}</p>}
         </form>
@@ -71,7 +71,7 @@ export default function Setores() {
                 </td>
                 {isAdmin && (
                   <td className="px-4 py-3 text-right">
-                    <button onClick={() => toggleAtivo(s)} className="text-xs text-blue-600 hover:underline">
+                    <button onClick={() => toggleAtivo(s)} className="text-xs text-vinho-600 hover:underline">
                       {s.ativo ? 'Desativar' : 'Ativar'}
                     </button>
                   </td>

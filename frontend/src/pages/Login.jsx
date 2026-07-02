@@ -26,9 +26,10 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-blue-900 flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-sm">
-        <h1 className="text-2xl font-bold text-center text-blue-800 mb-2">Protocolo Digital</h1>
+    <div className="min-h-screen bg-gradient-to-br from-vinho-800 to-vinho-900 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-sm">
+        <img src="/logo.png" alt="Província Santa Cruz" className="h-20 mx-auto mb-5 object-contain" />
+        <h1 className="text-2xl font-bold text-center text-vinho-800 mb-1">Protocolo Digital</h1>
         <p className="text-center text-gray-500 text-sm mb-6">Controle de Tráfego de Documentos</p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -37,7 +38,7 @@ export default function Login() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500"
               required
             />
           </div>
@@ -47,7 +48,7 @@ export default function Login() {
               type="password"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
-              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500"
               required
             />
           </div>
@@ -55,7 +56,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-700 text-white py-2 rounded hover:bg-blue-800 disabled:opacity-50 transition-colors"
+            className="w-full bg-vinho-700 text-white py-2 rounded hover:bg-vinho-800 disabled:opacity-50 transition-colors"
           >
             {loading ? 'Entrando...' : 'Entrar'}
           </button>

@@ -27,7 +27,7 @@ export default function Dashboard() {
         <h2 className="text-2xl font-bold text-gray-800">Dashboard</h2>
         <button
           onClick={() => navigate('/protocolos/novo')}
-          className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition-colors"
+          className="bg-vinho-700 text-white px-4 py-2 rounded hover:bg-vinho-800 transition-colors"
         >
           + Novo Protocolo
         </button>
@@ -37,7 +37,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <Card label="Total" valor={resumo.total} cor="bg-gray-600" />
           <Card label="Pendentes" valor={resumo.pendente} cor="bg-yellow-500" />
-          <Card label="Em Tramitação" valor={resumo.em_tramitacao} cor="bg-blue-600" />
+          <Card label="Em Tramitação" valor={resumo.em_tramitacao} cor="bg-vinho-600" />
           <Card label="Concluídos" valor={resumo.concluido} cor="bg-green-600" />
         </div>
       )}
@@ -58,7 +58,7 @@ export default function Dashboard() {
               <tr key={s.sigla} className="border-b last:border-0 hover:bg-gray-50">
                 <td className="py-2">{s.setor} <span className="text-gray-400 text-xs">({s.sigla})</span></td>
                 <td className="py-2 text-right text-yellow-600">{s.pendente}</td>
-                <td className="py-2 text-right text-blue-600">{s.em_tramitacao}</td>
+                <td className="py-2 text-right text-vinho-600">{s.em_tramitacao}</td>
                 <td className="py-2 text-right font-medium">{s.total}</td>
               </tr>
             ))}

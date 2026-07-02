@@ -4,7 +4,7 @@ import api from '../services/api'
 
 const STATUS_CORES = {
   PENDENTE: 'bg-yellow-100 text-yellow-800',
-  EM_TRAMITACAO: 'bg-blue-100 text-blue-800',
+  EM_TRAMITACAO: 'bg-vinho-100 text-vinho-800',
   CONCLUIDO: 'bg-green-100 text-green-800',
   ARQUIVADO: 'bg-gray-100 text-gray-600',
 }
@@ -36,7 +36,7 @@ export default function Protocolos() {
         <h2 className="text-2xl font-bold text-gray-800">Protocolos</h2>
         <button
           onClick={() => navigate('/protocolos/novo')}
-          className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition-colors"
+          className="bg-vinho-700 text-white px-4 py-2 rounded hover:bg-vinho-800 transition-colors"
         >
           + Novo Protocolo
         </button>
@@ -47,12 +47,12 @@ export default function Protocolos() {
           placeholder="Buscar por número, assunto ou remetente..."
           value={busca}
           onChange={handleBusca}
-          className="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500"
         />
         <select
           value={status}
           onChange={(e) => { setStatus(e.target.value); setPagina(1) }}
-          className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500"
         >
           <option value="">Todos os status</option>
           {Object.entries(STATUS_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
@@ -77,9 +77,9 @@ export default function Protocolos() {
               <tr
                 key={p.id}
                 onClick={() => navigate(`/protocolos/${p.id}`)}
-                className="border-t hover:bg-blue-50 cursor-pointer transition-colors"
+                className="border-t hover:bg-vinho-50 cursor-pointer transition-colors"
               >
-                <td className="px-4 py-3 font-mono font-medium text-blue-700">{p.numero}</td>
+                <td className="px-4 py-3 font-mono font-medium text-vinho-700">{p.numero}</td>
                 <td className="px-4 py-3">{p.assunto}</td>
                 <td className="px-4 py-3">{p.remetente}</td>
                 <td className="px-4 py-3">{TIPO_LABELS[p.tipo]}</td>

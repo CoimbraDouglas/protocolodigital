@@ -4,7 +4,7 @@ import api from '../services/api'
 
 const STATUS_CORES = {
   PENDENTE: 'bg-yellow-100 text-yellow-800',
-  EM_TRAMITACAO: 'bg-blue-100 text-blue-800',
+  EM_TRAMITACAO: 'bg-vinho-100 text-vinho-800',
   CONCLUIDO: 'bg-green-100 text-green-800',
   ARQUIVADO: 'bg-gray-100 text-gray-600',
 }
@@ -78,7 +78,7 @@ export default function DetalheProtocolo() {
         </dl>
 
         <div className="mt-4 pt-4 border-t flex gap-3 items-center">
-          <select value={statusForm} onChange={e => setStatusForm(e.target.value)} className="border rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select value={statusForm} onChange={e => setStatusForm(e.target.value)} className="border rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-vinho-500">
             {Object.entries(STATUS_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
           <button onClick={handleAtualizarStatus} className="px-3 py-1.5 text-sm bg-gray-700 text-white rounded hover:bg-gray-800 transition-colors">
@@ -95,7 +95,7 @@ export default function DetalheProtocolo() {
           <ol className="relative border-l border-gray-200 ml-3">
             {protocolo.tramitacoes.map((t) => (
               <li key={t.id} className="mb-5 ml-5">
-                <span className="absolute -left-2 w-4 h-4 rounded-full bg-blue-600 border-2 border-white" />
+                <span className="absolute -left-2 w-4 h-4 rounded-full bg-vinho-600 border-2 border-white" />
                 <p className="text-sm font-medium">
                   {t.setorOrigem.sigla} → {t.setorDestino.sigla}
                 </p>
@@ -117,7 +117,7 @@ export default function DetalheProtocolo() {
                 value={tramForm.setorDestinoId}
                 onChange={e => setTramForm(f => ({ ...f, setorDestinoId: e.target.value }))}
                 required
-                className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500"
               >
                 <option value="">Selecione o setor...</option>
                 {setores.filter(s => s.id !== protocolo.setorId).map(s => (
@@ -131,11 +131,11 @@ export default function DetalheProtocolo() {
                 value={tramForm.observacao}
                 onChange={e => setTramForm(f => ({ ...f, observacao: e.target.value }))}
                 rows={2}
-                className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500"
               />
             </div>
             {erro && <p className="text-red-600 text-sm">{erro}</p>}
-            <button type="submit" disabled={loading} className="px-5 py-2 bg-blue-700 text-white rounded hover:bg-blue-800 disabled:opacity-50 transition-colors">
+            <button type="submit" disabled={loading} className="px-5 py-2 bg-vinho-700 text-white rounded hover:bg-vinho-800 disabled:opacity-50 transition-colors">
               {loading ? 'Tramitando...' : 'Tramitar'}
             </button>
           </form>

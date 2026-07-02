@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import api from '../services/api'
 
-const PERFIL_CORES = { ADMIN: 'bg-red-100 text-red-800', OPERADOR: 'bg-blue-100 text-blue-800', VISUALIZADOR: 'bg-gray-100 text-gray-600' }
+const PERFIL_CORES = { ADMIN: 'bg-red-100 text-red-800', OPERADOR: 'bg-vinho-100 text-vinho-800', VISUALIZADOR: 'bg-gray-100 text-gray-600' }
 
 export default function Usuarios() {
   const [usuarios, setUsuarios] = useState([])
@@ -47,23 +47,23 @@ export default function Usuarios() {
         <h3 className="font-semibold text-gray-700 mb-3">Novo Usuário</h3>
         <div className="grid grid-cols-2 gap-3">
           <input placeholder="Nome" value={form.nome} onChange={e => setForm(f => ({ ...f, nome: e.target.value }))} required
-            className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" />
           <input placeholder="E-mail" type="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} required
-            className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" />
           <input placeholder="Senha" type="password" value={form.senha} onChange={e => setForm(f => ({ ...f, senha: e.target.value }))} required
-            className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" />
           <select value={form.perfil} onChange={e => setForm(f => ({ ...f, perfil: e.target.value }))}
-            className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500">
             <option value="OPERADOR">Operador</option>
             <option value="VISUALIZADOR">Visualizador</option>
             <option value="ADMIN">Administrador</option>
           </select>
           <select value={form.setorId} onChange={e => setForm(f => ({ ...f, setorId: e.target.value }))}
-            className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500">
             <option value="">Setor (opcional)</option>
             {setores.map(s => <option key={s.id} value={s.id}>{s.nome}</option>)}
           </select>
-          <button type="submit" className="px-5 py-2 bg-blue-700 text-white rounded hover:bg-blue-800 transition-colors">Cadastrar</button>
+          <button type="submit" className="px-5 py-2 bg-vinho-700 text-white rounded hover:bg-vinho-800 transition-colors">Cadastrar</button>
         </div>
         {erro && <p className="text-red-600 text-sm mt-2">{erro}</p>}
       </form>
@@ -95,7 +95,7 @@ export default function Usuarios() {
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right">
-                  <button onClick={() => toggleAtivo(u)} className="text-xs text-blue-600 hover:underline">
+                  <button onClick={() => toggleAtivo(u)} className="text-xs text-vinho-600 hover:underline">
                     {u.ativo ? 'Desativar' : 'Ativar'}
                   </button>
                 </td>

@@ -60,7 +60,7 @@ export default function MinhaConta() {
               type="password"
               value={senhaAtual}
               onChange={(e) => setSenhaAtual(e.target.value)}
-              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500"
               required
             />
           </div>
@@ -70,7 +70,7 @@ export default function MinhaConta() {
               type="password"
               value={novaSenha}
               onChange={(e) => setNovaSenha(e.target.value)}
-              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500"
               required
             />
             <p className="text-xs text-gray-400 mt-1">Mínimo de 6 caracteres.</p>
@@ -81,7 +81,7 @@ export default function MinhaConta() {
               type="password"
               value={confirmaSenha}
               onChange={(e) => setConfirmaSenha(e.target.value)}
-              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500"
               required
             />
           </div>
@@ -90,7 +90,7 @@ export default function MinhaConta() {
           <button
             type="submit"
             disabled={loading}
-            className="bg-blue-700 text-white py-2 px-4 rounded hover:bg-blue-800 disabled:opacity-50 transition-colors"
+            className="bg-vinho-700 text-white py-2 px-4 rounded hover:bg-vinho-800 disabled:opacity-50 transition-colors"
           >
             {loading ? 'Salvando...' : 'Alterar senha'}
           </button>
