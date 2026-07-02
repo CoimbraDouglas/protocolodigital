@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Perfil {
+  ADMIN
+  OPERADOR
+  VISUALIZADOR
+}
+
+enum TipoProtocolo {
+  ENTRADA
+  SAIDA
+  INTERNO
+}
+
+enum StatusProtocolo {
+  PENDENTE
+  EM_TRAMITACAO
+  CONCLUIDO
+  ARQUIVADO
+}
+
+model Setor {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  sigla     String   @unique
+  ativo     Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  usuarios     User[]
+  protocolos   Protocolo[]
+  origens      Tramitacao[] @relation("SetorOrigem")
+  destinos     Tramitacao[] @relation("SetorDestino")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  email     String   @unique
+  senha     String
+  perfil    Perfil   @default(OPERADOR)
+  ativo     Boolean  @default(true)
+  setorId   Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  setor       Setor?       @relation(fields: [setorId], references: [id])
+  protocolos  Protocolo[]
+  tramitacoes Tramitacao[]
+}
+
+model Protocolo {
+  id          Int             @id @default(autoincrement())
+  numero      String          @unique
+  assunto     String
+  tipo        TipoProtocolo   @default(ENTRADA)
+  remetente   String
+  descricao   String?
+  status      StatusProtocolo @default(PENDENTE)
+  dataEntrada DateTime        @default(now())
+  dataFecho   DateTime?
+  setorId     Int
+  usuarioId   Int
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  setor       Setor        @relation(fields: [setorId], references: [id])
+  usuario     User         @relation(fields: [usuarioId], references: [id])
+  tramitacoes Tramitacao[]
+}
+
+model Tramitacao {
+  id             Int      @id @default(autoincrement())
+  protocoloId    Int
+  setorOrigemId  Int
+  setorDestinoId Int
+  usuarioId      Int
+  observacao     String?
+  dataHora       DateTime @default(now())
+
+  protocolo    Protocolo @relation(fields: [protocoloId], references: [id])
+  setorOrigem  Setor     @relation("SetorOrigem", fields: [setorOrigemId], references: [id])
+  setorDestino Setor     @relation("SetorDestino", fields: [setorDestinoId], references: [id])
+  usuario      User      @relation(fields: [usuarioId], references: [id])
+}

@@ -1,0 +1,20 @@
+databases:
+  - name: protocolodigital-db
+    plan: free
+
+services:
+  - type: web
+    name: protocolodigital
+    runtime: node
+    plan: free
+    buildCommand: bash render-build.sh
+    startCommand: cd backend && npm run start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: protocolodigital-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: NODE_VERSION
+        value: "20"
