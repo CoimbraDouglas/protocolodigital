@@ -9,6 +9,7 @@ async function main() {
     prisma.setor.upsert({ where: { sigla: 'RH' }, update: {}, create: { nome: 'Recursos Humanos', sigla: 'RH' } }),
     prisma.setor.upsert({ where: { sigla: 'FIN' }, update: {}, create: { nome: 'Financeiro', sigla: 'FIN' } }),
     prisma.setor.upsert({ where: { sigla: 'TI' }, update: {}, create: { nome: 'Tecnologia da Informação', sigla: 'TI' } }),
+    prisma.setor.upsert({ where: { sigla: 'ARQ' }, update: {}, create: { nome: 'Arquivo Administrativo', sigla: 'ARQ' } }),
   ])
 
   const senhaHash = await bcrypt.hash('admin123', 10)

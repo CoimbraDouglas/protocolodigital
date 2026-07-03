@@ -2,15 +2,23 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../services/api'
 
+const hoje = new Date().toISOString().slice(0, 10)
+
 export default function NovoProtocolo() {
-  const [form, setForm] = useState({ assunto: '', tipo: 'ENTRADA', remetente: '', descricao: '', setorId: '', setorDestinatarioId: '' })
+  const [form, setForm] = useState({ assunto: '', tipo: 'ENTRADA', remetente: '', descricao: '', setorId: '', setorDestinatarioId: '', dataRemetido: hoje, nomeDestinatario: '', lembreteData: '', lembreteNota: '' })
   const [setores, setSetores] = useState([])
   const [erro, setErro] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
-    api.get('/setores').then((r) => setSetores(r.data.filter(s => s.ativo)))
+    api.get('/setores').then((r) => {
+      const ativos = r.data.filter(s => s.ativo)
+      setSetores(ativos)
+      // Setor responsável padrão: Arquivo Administrativo (usuário pode alterar)
+      const padrao = ativos.find(s => s.nome === 'Arquivo Administrativo')
+      if (padrao) setForm(f => ({ ...f, setorId: f.setorId || String(padrao.id) }))
+    })
   }, [])
 
   function handleChange(e) {
@@ -62,6 +70,14 @@ export default function NovoProtocolo() {
           </div>
         </div>
 
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Data remetido</label>
+            <input type="date" name="dataRemetido" value={form.dataRemetido} onChange={handleChange}
+              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" />
+          </div>
+        </div>
+
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Tipo documental *</label>
           <select name="assunto" value={form.assunto} onChange={handleChange} required
@@ -83,9 +99,33 @@ export default function NovoProtocolo() {
         </div>
 
         <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Nome do Destinatário</label>
+          <input name="nomeDestinatario" value={form.nomeDestinatario} onChange={handleChange}
+            placeholder="Nome da pessoa que recebe"
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" />
+        </div>
+
+        <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Descrição / Observações</label>
           <textarea name="descricao" value={form.descricao} onChange={handleChange} rows={3}
             className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" />
+        </div>
+
+        <div className="border border-vinho-100 rounded-lg p-4 bg-vinho-50/40">
+          <h3 className="text-sm font-semibold text-vinho-800 mb-3">Lembrete do trâmite</h3>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Lembrar em</label>
+              <input type="date" name="lembreteData" value={form.lembreteData} onChange={handleChange}
+                className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <label className="block text-sm font-medium text-gray-700 mb-1">Nota do lembrete</label>
+            <textarea name="lembreteNota" value={form.lembreteNota} onChange={handleChange} rows={2}
+              placeholder="Ex.: cobrar retorno do setor de destino"
+              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" />
+          </div>
         </div>
 
         {erro && <p className="text-red-600 text-sm">{erro}</p>}

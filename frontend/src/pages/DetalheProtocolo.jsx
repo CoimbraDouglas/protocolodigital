@@ -71,10 +71,18 @@ export default function DetalheProtocolo() {
           <div><dt className="text-gray-500">Tipo documental</dt><dd className="font-medium">{protocolo.assunto}</dd></div>
           <div><dt className="text-gray-500">Tipo</dt><dd>{protocolo.tipo}</dd></div>
           <div><dt className="text-gray-500">Destinatário (setor)</dt><dd>{protocolo.setorDestinatario ? `${protocolo.setorDestinatario.nome} (${protocolo.setorDestinatario.sigla})` : protocolo.remetente}</dd></div>
+          {protocolo.nomeDestinatario && <div><dt className="text-gray-500">Nome do Destinatário</dt><dd>{protocolo.nomeDestinatario}</dd></div>}
           <div><dt className="text-gray-500">Setor Atual</dt><dd>{protocolo.setor?.nome} ({protocolo.setor?.sigla})</dd></div>
           <div><dt className="text-gray-500">Cadastrado por</dt><dd>{protocolo.usuario?.nome}</dd></div>
           <div><dt className="text-gray-500">Data de Entrada</dt><dd>{new Date(protocolo.dataEntrada).toLocaleString('pt-BR')}</dd></div>
+          {protocolo.dataRemetido && <div><dt className="text-gray-500">Data remetido</dt><dd>{new Date(protocolo.dataRemetido).toLocaleDateString('pt-BR')}</dd></div>}
           {protocolo.descricao && <div className="col-span-2"><dt className="text-gray-500">Descrição</dt><dd>{protocolo.descricao}</dd></div>}
+          {protocolo.lembreteData && (
+            <div className="col-span-2 mt-1 rounded-md bg-vinho-50 border border-vinho-100 p-3">
+              <dt className="text-vinho-700 font-medium">🔔 Lembrete do trâmite · {new Date(protocolo.lembreteData).toLocaleDateString('pt-BR')}</dt>
+              {protocolo.lembreteNota && <dd className="text-gray-600 mt-0.5">{protocolo.lembreteNota}</dd>}
+            </div>
+          )}
         </dl>
 
         <div className="mt-4 pt-4 border-t flex gap-3 items-center">

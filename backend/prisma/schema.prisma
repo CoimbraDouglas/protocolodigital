@@ -77,7 +77,11 @@ model Protocolo {
   descricao   String?
   status      StatusProtocolo @default(PENDENTE)
   dataEntrada DateTime        @default(now())
+  dataRemetido DateTime?
   dataFecho   DateTime?
+  nomeDestinatario String?
+  lembreteData DateTime?
+  lembreteNota String?
   setorId     Int
   setorDestinatarioId Int?
   usuarioId   Int
