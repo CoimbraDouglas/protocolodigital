@@ -1,8 +1,24 @@
 const { PrismaClient } = require('@prisma/client')
+const { enviarEmailNovoProtocolo } = require('../services/email')
 const prisma = new PrismaClient()
 
 function gerarNumero(ano, seq) {
   return `${String(seq).padStart(5, '0')}/${ano}`
+}
+
+// Notifica por e-mail o destinatário escolhido na abertura do protocolo.
+// O e-mail é obtido a partir do funcionário (nome + setor) já cadastrado.
+// Falhas aqui não afetam a criação do protocolo — apenas são logadas.
+async function notificarDestinatario(protocolo, { nomeDestinatario, setorDestinatarioId }) {
+  if (!nomeDestinatario || !setorDestinatarioId) return
+  const funcionario = await prisma.funcionario.findFirst({
+    where: { nome: nomeDestinatario, setorId: Number(setorDestinatarioId) },
+  })
+  if (!funcionario?.email) {
+    console.warn(`[email] Destinatário "${nomeDestinatario}" sem e-mail cadastrado — notificação não enviada.`)
+    return
+  }
+  await enviarEmailNovoProtocolo({ para: funcionario.email, nomeDestinatario, protocolo })
 }
 
 async function listar(req, res) {
@@ -86,6 +102,11 @@ async function criar(req, res) {
     include: { setor: true, setorDestinatario: true },
   })
   res.status(201).json(protocolo)
+
+  // Notificação de abertura (não bloqueia a resposta e não derruba o cadastro).
+  notificarDestinatario(protocolo, { nomeDestinatario, setorDestinatarioId }).catch((err) =>
+    console.error(`[email] Falha ao notificar destinatário do protocolo ${protocolo.numero}:`, err.message)
+  )
 }
 
 async function atualizar(req, res) {
