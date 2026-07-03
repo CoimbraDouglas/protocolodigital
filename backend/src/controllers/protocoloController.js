@@ -39,6 +39,7 @@ async function buscarPorId(req, res) {
     where: { id: Number(id) },
     include: {
       setor: true,
+      setorDestinatario: true,
       usuario: { select: { id: true, nome: true } },
       tramitacoes: {
         include: {
@@ -55,7 +56,7 @@ async function buscarPorId(req, res) {
 }
 
 async function criar(req, res) {
-  const { assunto, tipo, remetente, descricao, setorId } = req.body
+  const { assunto, tipo, remetente, descricao, setorId, setorDestinatarioId } = req.body
   if (!assunto || !remetente || !setorId) return res.status(400).json({ erro: 'Campos obrigatórios faltando' })
 
   const ano = new Date().getFullYear()
@@ -74,9 +75,10 @@ async function criar(req, res) {
       remetente,
       descricao,
       setorId: Number(setorId),
+      setorDestinatarioId: setorDestinatarioId ? Number(setorDestinatarioId) : null,
       usuarioId: req.usuario.id,
     },
-    include: { setor: true },
+    include: { setor: true, setorDestinatario: true },
   })
   res.status(201).json(protocolo)
 }

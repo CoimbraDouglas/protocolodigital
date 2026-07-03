@@ -34,7 +34,8 @@ model Setor {
   createdAt DateTime @default(now())
 
   usuarios     User[]
-  protocolos   Protocolo[]
+  protocolos            Protocolo[] @relation("SetorResponsavel")
+  protocolosDestinatario Protocolo[] @relation("SetorDestinatario")
   origens      Tramitacao[] @relation("SetorOrigem")
   destinos     Tramitacao[] @relation("SetorDestino")
 }
@@ -66,11 +67,13 @@ model Protocolo {
   dataEntrada DateTime        @default(now())
   dataFecho   DateTime?
   setorId     Int
+  setorDestinatarioId Int?
   usuarioId   Int
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
 
-  setor       Setor        @relation(fields: [setorId], references: [id])
+  setor             Setor  @relation("SetorResponsavel", fields: [setorId], references: [id])
+  setorDestinatario Setor? @relation("SetorDestinatario", fields: [setorDestinatarioId], references: [id])
   usuario     User         @relation(fields: [usuarioId], references: [id])
   tramitacoes Tramitacao[]
 }

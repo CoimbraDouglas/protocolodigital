@@ -44,7 +44,7 @@ export default function Protocolos() {
 
       <div className="flex gap-3 mb-4">
         <input
-          placeholder="Buscar por número, assunto ou remetente..."
+          placeholder="Buscar por número, tipo documental ou remetente..."
           value={busca}
           onChange={handleBusca}
           className="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500"
@@ -64,8 +64,8 @@ export default function Protocolos() {
           <thead className="bg-gray-50 text-gray-600">
             <tr>
               <th className="text-left px-4 py-3">Número</th>
-              <th className="text-left px-4 py-3">Assunto</th>
-              <th className="text-left px-4 py-3">Remetente</th>
+              <th className="text-left px-4 py-3">Tipo documental</th>
+              <th className="text-left px-4 py-3">Destinatário</th>
               <th className="text-left px-4 py-3">Tipo</th>
               <th className="text-left px-4 py-3">Setor Atual</th>
               <th className="text-left px-4 py-3">Status</th>

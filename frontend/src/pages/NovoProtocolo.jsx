@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import api from '../services/api'
 
 export default function NovoProtocolo() {
-  const [form, setForm] = useState({ assunto: '', tipo: 'ENTRADA', remetente: '', descricao: '', setorId: '' })
+  const [form, setForm] = useState({ assunto: '', tipo: 'ENTRADA', remetente: '', descricao: '', setorId: '', setorDestinatarioId: '' })
   const [setores, setSetores] = useState([])
   const [erro, setErro] = useState('')
   const [loading, setLoading] = useState(false)
@@ -57,15 +57,29 @@ export default function NovoProtocolo() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Assunto *</label>
-          <input name="assunto" value={form.assunto} onChange={handleChange} required
+          <label className="block text-sm font-medium text-gray-700 mb-1">Tipo documental *</label>
+          <select name="assunto" value={form.assunto} onChange={handleChange} required
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500">
+            <option value="">Selecione...</option>
+            <option value="Pasta">Pasta</option>
+            <option value="Documento">Documento</option>
+            <option value="Caixa">Caixa</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Destinatário *</label>
+          <input name="remetente" value={form.remetente} onChange={handleChange} required
             className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Remetente *</label>
-          <input name="remetente" value={form.remetente} onChange={handleChange} required
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" />
+          <label className="block text-sm font-medium text-gray-700 mb-1">Setor do Destinatário</label>
+          <select name="setorDestinatarioId" value={form.setorDestinatarioId} onChange={handleChange}
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500">
+            <option value="">Selecione...</option>
+            {setores.map(s => <option key={s.id} value={s.id}>{s.nome} ({s.sigla})</option>)}
+          </select>
         </div>
 
         <div>
