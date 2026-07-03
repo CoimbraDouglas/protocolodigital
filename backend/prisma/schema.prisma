@@ -38,6 +38,18 @@ model Setor {
   protocolosDestinatario Protocolo[] @relation("SetorDestinatario")
   origens      Tramitacao[] @relation("SetorOrigem")
   destinos     Tramitacao[] @relation("SetorDestino")
+  funcionarios Funcionario[]
+}
+
+model Funcionario {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  email     String?
+  setorId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  setor     Setor    @relation(fields: [setorId], references: [id])
 }
 
 model User {
