@@ -7,6 +7,7 @@ const hoje = new Date().toISOString().slice(0, 10)
 export default function NovoProtocolo() {
   const [form, setForm] = useState({ assunto: '', tipo: 'ENTRADA', remetente: '', descricao: '', setorId: '', setorDestinatarioId: '', dataRemetido: hoje, nomeDestinatario: '', lembreteData: '', lembreteNota: '' })
   const [setores, setSetores] = useState([])
+  const [funcionariosDest, setFuncionariosDest] = useState([])
   const [erro, setErro] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
@@ -25,10 +26,17 @@ export default function NovoProtocolo() {
     setForm(f => ({ ...f, [e.target.name]: e.target.value }))
   }
 
-  function handleDestinatario(e) {
+  async function handleDestinatario(e) {
     const id = e.target.value
     const setor = setores.find(s => String(s.id) === id)
-    setForm(f => ({ ...f, setorDestinatarioId: id, remetente: setor ? `${setor.nome} (${setor.sigla})` : '' }))
+    setForm(f => ({ ...f, setorDestinatarioId: id, remetente: setor ? `${setor.nome} (${setor.sigla})` : '', nomeDestinatario: '' }))
+    if (!id) { setFuncionariosDest([]); return }
+    try {
+      const { data } = await api.get(`/setores/${id}/funcionarios`)
+      setFuncionariosDest(data)
+    } catch {
+      setFuncionariosDest([])
+    }
   }
 
   async function handleSubmit(e) {
@@ -100,9 +108,14 @@ export default function NovoProtocolo() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Nome do Destinatário</label>
-          <input name="nomeDestinatario" value={form.nomeDestinatario} onChange={handleChange}
-            placeholder="Nome da pessoa que recebe"
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" />
+          <select name="nomeDestinatario" value={form.nomeDestinatario} onChange={handleChange}
+            disabled={!form.setorDestinatarioId}
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500 disabled:bg-gray-100 disabled:text-gray-400">
+            <option value="">
+              {!form.setorDestinatarioId ? 'Escolha o setor primeiro' : (funcionariosDest.length ? 'Selecione...' : 'Nenhum funcionário no setor')}
+            </option>
+            {funcionariosDest.map(f => <option key={f.id} value={f.nome}>{f.nome}</option>)}
+          </select>
         </div>
 
         <div>
