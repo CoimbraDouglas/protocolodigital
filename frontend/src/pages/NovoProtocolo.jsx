@@ -17,6 +17,12 @@ export default function NovoProtocolo() {
     setForm(f => ({ ...f, [e.target.name]: e.target.value }))
   }
 
+  function handleDestinatario(e) {
+    const id = e.target.value
+    const setor = setores.find(s => String(s.id) === id)
+    setForm(f => ({ ...f, setorDestinatarioId: id, remetente: setor ? `${setor.nome} (${setor.sigla})` : '' }))
+  }
+
   async function handleSubmit(e) {
     e.preventDefault()
     setErro('')
@@ -68,16 +74,10 @@ export default function NovoProtocolo() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Destinatário *</label>
-          <input name="remetente" value={form.remetente} onChange={handleChange} required
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Setor do Destinatário</label>
-          <select name="setorDestinatarioId" value={form.setorDestinatarioId} onChange={handleChange}
+          <label className="block text-sm font-medium text-gray-700 mb-1">Destinatário (setor) *</label>
+          <select name="setorDestinatarioId" value={form.setorDestinatarioId} onChange={handleDestinatario} required
             className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500">
-            <option value="">Selecione...</option>
+            <option value="">Selecione o setor...</option>
             {setores.map(s => <option key={s.id} value={s.id}>{s.nome} ({s.sigla})</option>)}
           </select>
         </div>

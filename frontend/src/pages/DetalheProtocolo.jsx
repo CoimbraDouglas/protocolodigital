@@ -70,8 +70,7 @@ export default function DetalheProtocolo() {
         <dl className="grid grid-cols-2 gap-3 text-sm">
           <div><dt className="text-gray-500">Tipo documental</dt><dd className="font-medium">{protocolo.assunto}</dd></div>
           <div><dt className="text-gray-500">Tipo</dt><dd>{protocolo.tipo}</dd></div>
-          <div><dt className="text-gray-500">Destinatário</dt><dd>{protocolo.remetente}</dd></div>
-          <div><dt className="text-gray-500">Setor do Destinatário</dt><dd>{protocolo.setorDestinatario ? `${protocolo.setorDestinatario.nome} (${protocolo.setorDestinatario.sigla})` : '—'}</dd></div>
+          <div><dt className="text-gray-500">Destinatário (setor)</dt><dd>{protocolo.setorDestinatario ? `${protocolo.setorDestinatario.nome} (${protocolo.setorDestinatario.sigla})` : protocolo.remetente}</dd></div>
           <div><dt className="text-gray-500">Setor Atual</dt><dd>{protocolo.setor?.nome} ({protocolo.setor?.sigla})</dd></div>
           <div><dt className="text-gray-500">Cadastrado por</dt><dd>{protocolo.usuario?.nome}</dd></div>
           <div><dt className="text-gray-500">Data de Entrada</dt><dd>{new Date(protocolo.dataEntrada).toLocaleString('pt-BR')}</dd></div>
