@@ -66,6 +66,22 @@ function formatarData(valor) {
   }
 }
 
+// Para INSTANTES com hora relevante (ex.: lembreteData). O servidor roda em UTC
+// (Render), então fixamos o fuso de Brasília para exibir a hora que o usuário
+// escolheu, e não a hora UTC.
+function formatarDataHora(valor) {
+  if (!valor) return '—'
+  try {
+    return new Date(valor).toLocaleString('pt-BR', {
+      timeZone: 'America/Sao_Paulo',
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit',
+    })
+  } catch {
+    return String(valor)
+  }
+}
+
 // --- Template base (HTML) --------------------------------------------------
 
 function linha(rotulo, valor) {
@@ -164,7 +180,7 @@ function montarEmailLembrete(protocolo, nomeDestinatario) {
     ['Tipo documental', protocolo.assunto],
     ['Remetente', protocolo.remetente],
     ['Setor responsável', protocolo.setor?.nome],
-    ['Prazo do lembrete', formatarData(protocolo.lembreteData)],
+    ['Prazo do lembrete', formatarDataHora(protocolo.lembreteData)],
     ['Nota', protocolo.lembreteNota],
   ]
 

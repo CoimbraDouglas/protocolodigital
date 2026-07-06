@@ -75,11 +75,11 @@ export default function DetalheProtocolo() {
           <div><dt className="text-gray-500">Setor Atual</dt><dd>{protocolo.setor?.nome} ({protocolo.setor?.sigla})</dd></div>
           <div><dt className="text-gray-500">Cadastrado por</dt><dd>{protocolo.usuario?.nome}</dd></div>
           <div><dt className="text-gray-500">Data de Entrada</dt><dd>{new Date(protocolo.dataEntrada).toLocaleString('pt-BR')}</dd></div>
-          {protocolo.dataRemetido && <div><dt className="text-gray-500">Data remetido</dt><dd>{new Date(protocolo.dataRemetido).toLocaleDateString('pt-BR')}</dd></div>}
+          {protocolo.dataRemetido && <div><dt className="text-gray-500">Data remetido</dt><dd>{new Date(protocolo.dataRemetido).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}</dd></div>}
           {protocolo.descricao && <div className="col-span-2"><dt className="text-gray-500">Descrição</dt><dd>{protocolo.descricao}</dd></div>}
           {protocolo.lembreteData && (
             <div className="col-span-2 mt-1 rounded-md bg-vinho-50 border border-vinho-100 p-3">
-              <dt className="text-vinho-700 font-medium">🔔 Lembrete do trâmite · {new Date(protocolo.lembreteData).toLocaleDateString('pt-BR')}</dt>
+              <dt className="text-vinho-700 font-medium">🔔 Lembrete do trâmite · {new Date(protocolo.lembreteData).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}</dt>
               {protocolo.lembreteNota && <dd className="text-gray-600 mt-0.5">{protocolo.lembreteNota}</dd>}
             </div>
           )}

@@ -44,7 +44,12 @@ export default function NovoProtocolo() {
     setErro('')
     setLoading(true)
     try {
-      const { data } = await api.post('/protocolos', form)
+      // O <input datetime-local> dá um horário "de parede" sem fuso. Convertemos
+      // aqui (no navegador, em horário de Brasília) para um instante ISO em UTC,
+      // pois o servidor roda em UTC e interpretaria a string crua como UTC.
+      const payload = { ...form }
+      if (form.lembreteData) payload.lembreteData = new Date(form.lembreteData).toISOString()
+      const { data } = await api.post('/protocolos', payload)
       navigate(`/protocolos/${data.id}`)
     } catch (err) {
       setErro(err.response?.data?.erro || 'Erro ao cadastrar protocolo')
@@ -128,8 +133,8 @@ export default function NovoProtocolo() {
           <h3 className="text-sm font-semibold text-vinho-800 mb-3">Lembrete do trâmite</h3>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Lembrar em</label>
-              <input type="date" name="lembreteData" value={form.lembreteData} onChange={handleChange}
+              <label className="block text-sm font-medium text-gray-700 mb-1">Lembrar em (data e hora)</label>
+              <input type="datetime-local" name="lembreteData" value={form.lembreteData} onChange={handleChange}
                 className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vinho-500" />
             </div>
           </div>
