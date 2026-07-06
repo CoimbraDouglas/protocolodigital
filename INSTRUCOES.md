@@ -102,22 +102,6 @@ Ao **abrir um novo protocolo**, o sistema envia automaticamente um e-mail para o
 > O envio só acontece se as variáveis SMTP estiverem configuradas. Sem elas, o
 > sistema funciona normalmente, apenas sem enviar e-mails.
 
-### Configurar (Gmail / Google Workspace — ex.: @csa.g12.br)
-
-1. Ative a **verificação em duas etapas** na conta Google.
-2. Gere uma **Senha de app** (Conta Google → Segurança → Senhas de app).
-3. Defina as variáveis de ambiente (no `.env` local ou no painel do Render):
-
-```
-SMTP_HOST="smtp.gmail.com"
-SMTP_PORT="465"
-SMTP_SECURE="true"
-SMTP_USER="seu_email@csa.g12.br"
-SMTP_PASS="senha_de_app_16_digitos"   # NÃO a senha normal da conta
-EMAIL_FROM="Protocolo Digital <seu_email@csa.g12.br>"
-APP_URL="https://protocolodigital.onrender.com"   # link nos e-mails
-```
-
 > **Importante:** para o e-mail chegar, o funcionário destinatário precisa ter
 > **e-mail cadastrado** (em Setores → funcionários do setor).
 
