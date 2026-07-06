@@ -19,6 +19,7 @@ export default function DetalheProtocolo() {
   const [statusForm, setStatusForm] = useState('')
   const [erro, setErro] = useState('')
   const [loading, setLoading] = useState(false)
+  const isAdmin = JSON.parse(localStorage.getItem('usuario') || '{}').perfil === 'ADMIN'
 
   useEffect(() => {
     api.get(`/protocolos/${id}`).then((r) => { setProtocolo(r.data); setStatusForm(r.data.status) })
@@ -39,6 +40,17 @@ export default function DetalheProtocolo() {
       setErro(err.response?.data?.erro || 'Erro ao tramitar')
     } finally {
       setLoading(false)
+    }
+  }
+
+  async function handleExcluir() {
+    if (!window.confirm(`Excluir o protocolo ${protocolo.numero}? Esta ação é irreversível e remove todo o histórico de tramitações.`)) return
+    setErro('')
+    try {
+      await api.delete(`/protocolos/${id}`)
+      navigate('/protocolos')
+    } catch (err) {
+      setErro(err.response?.data?.erro || 'Erro ao excluir protocolo')
     }
   }
 
@@ -147,6 +159,19 @@ export default function DetalheProtocolo() {
               {loading ? 'Tramitando...' : 'Tramitar'}
             </button>
           </form>
+
+          {isAdmin && (
+            <div className="mt-5 pt-4 border-t border-gray-100">
+              <button
+                type="button"
+                onClick={handleExcluir}
+                className="px-5 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+              >
+                Excluir Protocolo
+              </button>
+              <p className="text-xs text-gray-400 mt-1">Ação irreversível — remove o protocolo e todo o seu histórico de tramitações.</p>
+            </div>
+          )}
         </div>
       )}
     </div>

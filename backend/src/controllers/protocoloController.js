@@ -123,4 +123,19 @@ async function atualizar(req, res) {
   }
 }
 
-module.exports = { listar, buscarPorId, criar, atualizar }
+// Exclui o protocolo e todo o seu histórico. As tramitações têm FK para o
+// protocolo, então são removidas antes, na mesma transação (tudo ou nada).
+async function excluir(req, res) {
+  const protocoloId = Number(req.params.id)
+  try {
+    await prisma.$transaction([
+      prisma.tramitacao.deleteMany({ where: { protocoloId } }),
+      prisma.protocolo.delete({ where: { id: protocoloId } }),
+    ])
+    res.status(204).end()
+  } catch {
+    res.status(404).json({ erro: 'Protocolo não encontrado' })
+  }
+}
+
+module.exports = { listar, buscarPorId, criar, atualizar, excluir }
